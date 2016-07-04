@@ -1,3 +1,4 @@
+<%@page pageEncoding="utf-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
@@ -10,9 +11,24 @@
 <br>
 
 <h3>SimpleCAPTCHA Example - Simple CAPTCHA</h3>
-<img src="<c:url value="simpleCaptcha.png" />"><br />
-<p>A simple CAPTCHA which generates a new CAPTCHA on each page reload.</p>
+<form action="simpleCaptchaSubmit.jsp">
+<a href="javascript:void(0)" onclick="refreshVerifycode()">
+<img id="img" src="<c:url value="simpleCaptcha.png" />">
+</a><br />
+验证码 <input id="answer" name="answer" />
+<input type="submit" value="submit" />
 
+<p>A simple CAPTCHA which generates a new CAPTCHA on each page reload.</p>
+</form>
 <p>Simple CAPTCHA | <a href="<c:url value="stickyCaptcha.jsp" />">Sticky CAPTCHA</a> | <a href="<c:url value="audioCaptcha.jsp" />">Audio CAPTCHA</a></p>
+<script type="text/javascript">
+
+function refreshVerifycode() {
+	$("#img").attr("src", "simpleCaptcha.png?"+Math.random());
+}
+
+
+</script>
 </body>
+
 </html>
