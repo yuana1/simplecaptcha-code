@@ -9,7 +9,7 @@ import org.junit.Test;
 public class StickyCaptchaServletTest {
     @Test
     public void testShouldExpire() {
-        Captcha captcha = new Captcha.Builder(200, 50)
+        Captcha captcha = new Captcha.Builder(200, 50, true)
             .addText()
             .build();
         

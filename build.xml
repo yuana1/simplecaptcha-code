@@ -8,6 +8,7 @@
         <pathelement location="bin"/>
         <pathelement location="${env.CATALINA_HOME}/lib/servlet-api.jar"/>
         <pathelement location="lib/imaging.jar"/>
+        <pathelement location="lib/servlet-api.jar"/>
     </path>
 
     <target name="init">
@@ -42,6 +43,11 @@
         <delete dir="${marshalldir}" />
 
         <echo message="Successfully created dist/simplecaptcha-${version.num}.jar" />
+	</target>
+	
+	<target name="install" depends="build-jar" >
+		<copyfile src="dist/simplecaptcha-${version.num}.jar" 
+			dest="F:\workspace1\simplecaptcha-1.2-j2ee-sample\WebContent\WEB-INF\lib\simplecaptcha-${version.num}.jar"/>
 	</target>
 
     <target name="j2ee-example" depends="build-jar">

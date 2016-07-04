@@ -32,6 +32,7 @@ public class SimpleCaptchaServlet extends HttpServlet {
 
     private static int _width = 200;
     private static int _height = 50;
+    private static boolean _canUseMulti = false;
     
     private static final List<Color> COLORS = new ArrayList<Color>(2);
     private static final List<Font> FONTS = new ArrayList<Font>(3);
@@ -40,9 +41,7 @@ public class SimpleCaptchaServlet extends HttpServlet {
         COLORS.add(Color.BLACK);
         COLORS.add(Color.BLUE);
 
-        FONTS.add(new Font("Geneva", Font.ITALIC, 48));
-        FONTS.add(new Font("Courier", Font.BOLD, 48));
-        FONTS.add(new Font("Arial", Font.BOLD, 48));
+      
     }
 
     @Override
@@ -55,13 +54,19 @@ public class SimpleCaptchaServlet extends HttpServlet {
     	if (getInitParameter("captcha-width") != null) {
     		_width = Integer.valueOf(getInitParameter("captcha-width"));
     	}
+    	if (getInitParameter("canUseMulti") != null) {
+    		_canUseMulti = Boolean.valueOf(getInitParameter("canUseMulti"));
+    	}
+    	FONTS.add(new Font("Geneva", Font.ITALIC, _height));
+        FONTS.add(new Font("Courier", Font.BOLD, _height));
+        FONTS.add(new Font("Arial", Font.BOLD, _height));
     }
     
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         ColoredEdgesWordRenderer wordRenderer = new ColoredEdgesWordRenderer(COLORS, FONTS);
-        Captcha captcha = new Captcha.Builder(_width, _height).addText(wordRenderer)
+        Captcha captcha = new Captcha.Builder(_width, _height, _canUseMulti).addText(wordRenderer)
                 .gimp()
                 .addNoise()
                 .addBackground(new GradiatedBackgroundProducer())

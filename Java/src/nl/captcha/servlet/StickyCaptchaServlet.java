@@ -110,7 +110,7 @@ public class StickyCaptchaServlet extends HttpServlet {
     }
 
     private Captcha buildAndSetCaptcha(HttpSession session) {
-        Captcha captcha = new Captcha.Builder(_width, _height)
+        Captcha captcha = new Captcha.Builder(_width, _height, true)
             .addText()
             .gimp()
             .addBorder()

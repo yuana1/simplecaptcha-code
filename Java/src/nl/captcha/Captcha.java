@@ -56,8 +56,10 @@ public final class Captcha implements Serializable {
     private static final long serialVersionUID = 617511236L;
     public static final String NAME = "simpleCaptcha";
     private Builder _builder;
+    
+    private boolean isCaptchaUsed = false;
 
-    private Captcha(Builder builder) {
+	private Captcha(Builder builder) {
         _builder = builder;
     }
 
@@ -81,8 +83,11 @@ public final class Captcha implements Serializable {
         private Date _timeStamp;
 
         private boolean _addBorder = false;
+        
+        private boolean _canUseMulti = false;	//可以被使用多次
 
-        public Builder(int width, int height) {
+        public Builder(int width, int height, boolean canUseMulti) {
+        	_canUseMulti = canUseMulti;
             _img = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         }
 
@@ -253,7 +258,11 @@ public final class Captcha implements Serializable {
     }
 
     public boolean isCorrect(String answer) {
-        return answer.equals(_builder._answer);
+    	if(_builder._canUseMulti || !_builder._canUseMulti && !isCaptchaUsed ) {
+    		return answer.equals(_builder._answer);
+    	} else {
+    		return false;
+    	}
     }
     
     public String getAnswer() {
